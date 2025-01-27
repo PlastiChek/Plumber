@@ -1,4 +1,13 @@
 import pygame
+import sys
+
+
+FPS = 60
+
+
+def terminate():
+    pygame.quit()
+    sys.exit()
 
 
 class Board:
@@ -43,20 +52,23 @@ class Board:
         print(self.mouse_pos)
 
 
-pygame.init()
-board = Board(5, 7)
-screen = pygame.display.set_mode((400, 400))
-pygame.display.set_caption('Трубопроводчик')
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            board.get_click(event.pos)
+if __name__ == "__main__":
+    pygame.init()
+    board = Board(5, 7)
+    screen = pygame.display.set_mode((400, 400))
+    pygame.display.set_caption('Трубопроводчик')
+    clock = pygame.time.Clock()
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                board.get_click(event.pos)
 
-    screen.fill((0, 0, 0))
-    board.render(screen)
-    pygame.display.flip()
+        screen.fill((0, 0, 0))
+        board.render(screen)
+        pygame.display.flip()
+        clock.tick(FPS)
 
-pygame.quit()
+    pygame.quit()
